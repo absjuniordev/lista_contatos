@@ -1,4 +1,4 @@
-# lista_contatos
+# Lista de contatos
 
 A new Flutter project.
 
