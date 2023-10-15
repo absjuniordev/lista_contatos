@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_contatos/page/cadastro_contatos_page.dart';
 import 'package:lista_contatos/page/lista_contatos_page.dart';
 
 void main() {
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Lista de Contatos",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black12),
       ),
       routes: {
         '/contatos': (context) => const ListaContatosPages(),
+        '/cadastro': (context) => const CadastroContatosPage(),
       },
       initialRoute: '/contatos',
     );
