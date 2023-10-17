@@ -10,6 +10,13 @@ class CadastroContatosPage extends StatefulWidget {
 }
 
 class _CadastroContatosPageState extends State<CadastroContatosPage> {
+  var controllerNome = TextEditingController(text: "");
+  var controllerSobreNome = TextEditingController(text: "");
+  var controllerApelido = TextEditingController(text: "");
+  var controllerTelefone = TextEditingController(text: "");
+  var controllerEmail = TextEditingController(text: "");
+  var controllerDataNascimento = TextEditingController(text: "");
+  var controllerInformacoes = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,14 +84,17 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: controllerNome,
                             decoration:
                                 const InputDecoration(label: Text("Nome")),
                           ),
                           TextFormField(
+                            controller: controllerSobreNome,
                             decoration:
                                 const InputDecoration(label: Text("Sobrenome")),
                           ),
                           TextFormField(
+                            controller: controllerApelido,
                             decoration:
                                 const InputDecoration(label: Text("Apelido")),
                           ),
@@ -98,6 +108,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: controllerTelefone,
                             keyboardType: TextInputType.phone,
                             inputFormatters: [
                               // obrigatório
@@ -118,6 +129,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: controllerEmail,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
                               label: Text("E-mail"),
@@ -133,6 +145,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: controllerDataNascimento,
                             inputFormatters: [
                               // obrigatório
                               FilteringTextInputFormatter.digitsOnly,
@@ -148,6 +161,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                     ),
                     const SizedBox(height: 20),
                     Container(
+                      height: 100,
                       decoration: const BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: Colors.white,
@@ -155,6 +169,8 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            maxLines: 3,
+                            controller: controllerInformacoes,
                             decoration: const InputDecoration(
                               label: Text("Informações Adcionais"),
                             ),

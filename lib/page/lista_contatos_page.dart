@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/repository/sqlite_repository.dart';
 
 class ListaContatosPages extends StatefulWidget {
   const ListaContatosPages({super.key});
@@ -8,6 +10,20 @@ class ListaContatosPages extends StatefulWidget {
 }
 
 class _ListaContatosPagesState extends State<ListaContatosPages> {
+  SQLITERepository _repository = SQLITERepository();
+  var _contatos = const <ContatosModel>[];
+  @override
+  void initState() {
+    super.initState();
+    obterLista();
+  }
+
+  obterLista() async {
+    _contatos = await _repository.obterListaConattos();
+    print(_contatos);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,7 +69,16 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                   ),
                 ),
                 child: Column(
-                  children: [const Text("Contatos salvos")],
+                  children: [
+                    const Text("Contatos salvos"),
+                    // ListView.builder(
+                    //   itemBuilder: (context, index) {
+                    //     var contatos = _contatos[index];
+                    //     Text(contatos.nome);
+                    //   },
+                    //   itemCount: _contatos.length,
+                    // ),
+                  ],
                 ),
               )
             ],
