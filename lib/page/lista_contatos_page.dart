@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
 import 'package:lista_contatos/repository/sqlite_repository.dart';
@@ -58,11 +60,10 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                 height: MediaQuery.of(context).size.height / 1,
                 width: double.infinity,
                 padding: const EdgeInsets.only(
-                  top: 15,
-                  left: 15,
+                  top: 50,
                 ),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromARGB(225, 255, 255, 255),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(45),
                     topRight: Radius.circular(45),
@@ -70,17 +71,69 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                 ),
                 child: Column(
                   children: [
-                    const Text("Contatos salvos"),
-                    // ListView.builder(
-                    //   itemBuilder: (context, index) {
-                    //     var contatos = _contatos[index];
-                    //     Text(contatos.nome);
-                    //   },
-                    //   itemCount: _contatos.length,
-                    // ),
+                    const Expanded(
+                      flex: 1,
+                      child: Text(
+                        "Lita de contatos",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      flex: 30,
+                      child: SizedBox(
+                        child: ListView.builder(
+                          itemCount: _contatos.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            var contatos = _contatos[index];
+                            return Card(
+                              elevation: 5,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 2),
+                                height: 50,
+                                child: Row(
+                                  children: [
+                                    contatos.imageUrl != ""
+                                        ? ClipOval(
+                                            child: Image(
+                                              width: 45,
+                                              height: 45,
+                                              fit: BoxFit.cover,
+                                              image: FileImage(
+                                                scale: 22,
+                                                File(contatos.imageUrl),
+                                              ),
+                                            ),
+                                          )
+                                        : Image.network(
+                                            "https://www.imagensempng.com.br/wp-content/uploads/2021/08/02-52.png",
+                                            scale: 5,
+                                          ),
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 16),
+                                    ),
+                                    Text(
+                                      " ${contatos.nome}  ${contatos.sobreName}",
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

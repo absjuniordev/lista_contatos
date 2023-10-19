@@ -8,6 +8,7 @@ class ContatosModel {
   String _email = "";
   String _dataNascimento = "";
   String _informacoes = "";
+  String? _imageUrl;
   ContatosModel(
     this._id,
     this._name,
@@ -17,6 +18,7 @@ class ContatosModel {
     this._email,
     this._dataNascimento,
     this._informacoes,
+    this._imageUrl,
   );
   int get id => _id;
   String get nome => _name;
@@ -26,6 +28,7 @@ class ContatosModel {
   String get email => _email;
   String get dataNascimento => _dataNascimento;
   String get informacoes => _informacoes;
+  String get imageUrl => _imageUrl!;
 
   set id(int id) => _id = id;
   set nome(String nome) => _name = nome;
@@ -35,9 +38,10 @@ class ContatosModel {
   set email(String email) => _email = email;
   set dataNascimento(String dataNascimento) => _dataNascimento = dataNascimento;
   set informacoes(String informacoes) => _informacoes = informacoes;
+  set imageUrl(String imagem) => _imageUrl = imagem;
 
   @override
   String toString() {
-    return 'ContatosModel(_id: $_id, _name: $_name, _sobreName: $_sobreName, _apelido: $_apelido, _telefone: $_telefone, _email: $_email, _dataNascimento: $_dataNascimento, _informacoes: $_informacoes)';
+    return 'ContatosModel(_id: $_id, _name: $_name, _sobreName: $_sobreName, _apelido: $_apelido, _telefone: $_telefone, _email: $_email, _dataNascimento: $_dataNascimento, _informacoes: $_informacoes, _imageUrl: $_imageUrl)';
   }
 }

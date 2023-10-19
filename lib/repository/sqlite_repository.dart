@@ -7,7 +7,7 @@ class SQLITERepository {
 
     var db = await SQLTEDatabase().obterDB();
     var result = await db.rawQuery(
-        'SELECT id, name, sobreName, apelido, telefone, email , dataNascimento, informacoes FROM contatos');
+        'SELECT id, name, sobreName, apelido, telefone, email , dataNascimento, informacoes, imageUrl FROM contatos');
     for (var element in result) {
       contatos.add(
         ContatosModel(
@@ -19,6 +19,7 @@ class SQLITERepository {
           element['email'].toString(),
           element['dataNascimento'].toString(),
           element['informacoes'].toString(),
+          element['imageUrl'].toString(),
         ),
       );
     }
@@ -30,7 +31,7 @@ class SQLITERepository {
 
     db.transaction((txn) async {
       txn.rawInsert(
-        'INSERT INTO contatos ( name, sobreName, apelido, telefone, email, dataNascimento, informacoes) VALUES(?, ?, ?, ?, ?, ?, ? )',
+        'INSERT INTO contatos ( name, sobreName, apelido, telefone, email, dataNascimento, informacoes, imageUrl) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
         [
           contatosModel.nome,
           contatosModel.sobreName,
@@ -39,6 +40,7 @@ class SQLITERepository {
           contatosModel.email,
           contatosModel.dataNascimento,
           contatosModel.informacoes,
+          contatosModel.imageUrl
         ],
       );
     });

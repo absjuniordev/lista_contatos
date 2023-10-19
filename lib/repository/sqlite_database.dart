@@ -11,7 +11,8 @@ const scripts = {
           telefone TEXT,
           email TEXT,
           dataNascimento TEXT,
-          informacoes TEXT
+          informacoes TEXT,
+          imageUrl TEXT
           );'''
 };
 
