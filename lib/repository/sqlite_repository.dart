@@ -23,6 +23,7 @@ class SQLITERepository {
         ),
       );
     }
+
     return contatos;
   }
 

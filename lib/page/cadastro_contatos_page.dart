@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/util/mostrar_error.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:lista_contatos/repository/sqlite_repository.dart';
@@ -26,6 +26,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
   var controllerDataNascimento = TextEditingController(text: "");
   var controllerInformacoes = TextEditingController(text: "");
 
+  // ignore: prefer_final_fields
   var _repository = SQLITERepository();
 
   XFile? photo;
@@ -72,22 +73,29 @@ class _CadastroContatosPageState extends State<CadastroContatosPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      _repository.salvarListaContatos(
-                        ContatosModel(
-                          0,
-                          controllerNome.text,
-                          controllerSobreNome.text,
-                          controllerApelido.text,
-                          controllerTelefone.text,
-                          controllerEmail.text,
-                          controllerDataNascimento.text,
-                          controllerInformacoes.text,
-                          photo == null ? "" : photo!.path,
-                        ),
-                      );
+                      if (controllerNome.text.isEmpty ||
+                          controllerNome.text.length <= 3) {
+                        mostrarErro(context, "Nome invalido");
+                      } else if (controllerTelefone.text.isEmpty) {
+                        mostrarErro(context, "Numero invalido");
+                      } else {
+                        _repository.salvarListaContatos(
+                          ContatosModel(
+                            0,
+                            controllerNome.text,
+                            controllerSobreNome.text,
+                            controllerApelido.text,
+                            controllerTelefone.text,
+                            controllerEmail.text,
+                            controllerDataNascimento.text,
+                            controllerInformacoes.text,
+                            photo == null ? "" : photo!.path,
+                          ),
+                        );
 
-                      setState(() {});
-                      Navigator.pushNamed(context, "/contatos");
+                        setState(() {});
+                        Navigator.pushNamed(context, "/contatos");
+                      }
                     },
                     child: const Text(
                       "Salvar",

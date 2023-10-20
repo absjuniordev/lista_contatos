@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/page/contato_detalhes_page.dart';
 import 'package:lista_contatos/repository/sqlite_repository.dart';
 
 class ListaContatosPages extends StatefulWidget {
@@ -12,7 +12,7 @@ class ListaContatosPages extends StatefulWidget {
 }
 
 class _ListaContatosPagesState extends State<ListaContatosPages> {
-  SQLITERepository _repository = SQLITERepository();
+  var _repository = SQLITERepository();
   var _contatos = const <ContatosModel>[];
   @override
   void initState() {
@@ -22,6 +22,7 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
 
   obterLista() async {
     _contatos = await _repository.obterListaConattos();
+
     print(_contatos);
     setState(() {});
   }
@@ -90,40 +91,55 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             var contatos = _contatos[index];
-                            return Card(
-                              elevation: 5,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 2),
-                                height: 50,
-                                child: Row(
-                                  children: [
-                                    contatos.imageUrl != ""
-                                        ? ClipOval(
-                                            child: Image(
-                                              width: 45,
-                                              height: 45,
-                                              fit: BoxFit.cover,
-                                              image: FileImage(
-                                                scale: 22,
-                                                File(contatos.imageUrl),
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ContatoDetalhesPage(
+                                      item: _contatos[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                elevation: 5,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 2,
+                                  ),
+                                  height: 50,
+                                  child: Row(
+                                    children: [
+                                      contatos.imageUrl != ""
+                                          ? ClipOval(
+                                              child: Image(
+                                                width: 45,
+                                                height: 45,
+                                                fit: BoxFit.cover,
+                                                image: FileImage(
+                                                  scale: 22,
+                                                  File(contatos.imageUrl),
+                                                ),
                                               ),
+                                            )
+                                          : Image.network(
+                                              "https://www.imagensempng.com.br/wp-content/uploads/2021/08/02-52.png",
+                                              scale: 5,
                                             ),
-                                          )
-                                        : Image.network(
-                                            "https://www.imagensempng.com.br/wp-content/uploads/2021/08/02-52.png",
-                                            scale: 5,
-                                          ),
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 16),
-                                    ),
-                                    Text(
-                                      " ${contatos.nome}  ${contatos.sobreName}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 16),
+                                      ),
+                                      Text(
+                                        " ${contatos.nome}  ${contatos.sobreName}",
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

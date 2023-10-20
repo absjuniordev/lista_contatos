@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ContatosModel {
   int _id = 0;
@@ -44,4 +46,37 @@ class ContatosModel {
   String toString() {
     return 'ContatosModel(_id: $_id, _name: $_name, _sobreName: $_sobreName, _apelido: $_apelido, _telefone: $_telefone, _email: $_email, _dataNascimento: $_dataNascimento, _informacoes: $_informacoes, _imageUrl: $_imageUrl)';
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      '_id': _id,
+      '_name': _name,
+      '_sobreName': _sobreName,
+      '_apelido': _apelido,
+      '_telefone': _telefone,
+      '_email': _email,
+      '_dataNascimento': _dataNascimento,
+      '_informacoes': _informacoes,
+      '_imageUrl': _imageUrl,
+    };
+  }
+
+  factory ContatosModel.fromMap(Map<String, dynamic> map) {
+    return ContatosModel(
+      map['_id'] as int,
+      map['_name'] as String,
+      map['_sobreName'] as String,
+      map['_apelido'] as String,
+      map['_telefone'] as String,
+      map['_email'] as String,
+      map['_dataNascimento'] as String,
+      map['_informacoes'] as String,
+      map['_imageUrl'] != null ? map['_imageUrl'] as String : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ContatosModel.fromJson(String source) =>
+      ContatosModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
