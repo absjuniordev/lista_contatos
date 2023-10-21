@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContatoDetalhesPage extends StatefulWidget {
   final ContatosModel item;
@@ -15,22 +17,23 @@ class _ContatoDetalhesPageState extends State<ContatoDetalhesPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: ConvexAppBar.badge(
+          const {},
+          backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+          items: const [
+            TabItem(
+                icon: FontAwesomeIcons.backward, title: 'Adcionar Contatos'),
+          ],
+          onTap: (_) {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: const Color.fromARGB(255, 34, 78, 134),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/contatos');
-                    },
-                    icon: const Icon(
-                      Icons.keyboard_return,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 25,
               ),
               widget.item.imageUrl != ""
                   ? ClipOval(

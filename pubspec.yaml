@@ -21,6 +21,8 @@ dependencies:
   image_cropper: ^4.0.1
   font_awesome_flutter: ^10.5.0
   path_provider: ^2.1.1
+  convex_bottom_bar: ^3.2.0
+ 
 
 dev_dependencies:
   flutter_test:
