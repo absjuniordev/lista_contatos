@@ -22,7 +22,7 @@ mostrarInfo(
                   TextButton(
                     onPressed: () {
                       _repository.apagarContato(id);
-                      Navigator.of(context).pop();
+                      Navigator.popAndPushNamed(context, '/');
                     },
                     child: const Text("Sim"),
                   ),

@@ -30,10 +30,10 @@ class SQLITERepository {
   Future<void> salvarListaContatos(ContatosModel contatosModel) async {
     var db = await SQLTEDatabase().obterDB();
 
-    db.transaction(
+    await db.transaction(
       (txn) async {
-        txn.rawInsert(
-          'INSERT INTO contatos ( name, sobreName, apelido, telefone, email, dataNascimento, informacoes, imageUrl) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+        await txn.rawInsert(
+          'INSERT INTO contatos (name, sobreName, apelido, telefone, email, dataNascimento, informacoes, imageUrl) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
           [
             contatosModel.nome,
             contatosModel.sobreName,
@@ -52,6 +52,10 @@ class SQLITERepository {
   Future<void> apagarContato(int id) async {
     var db = await SQLTEDatabase().obterDB();
 
-    await db.rawDelete('DELETE FROM contatos WHERE id = ?', [id]);
+    await db.transaction(
+      (txn) async {
+        txn.rawDelete('DELETE FROM contatos WHERE id = ?', [id]);
+      },
+    );
   }
 }

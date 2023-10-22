@@ -34,10 +34,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           const {},
           backgroundColor: const Color.fromARGB(255, 34, 78, 134),
           items: const [
-            TabItem(icon: FontAwesomeIcons.add, title: 'Adcionar Contatos'),
+            TabItem(icon: FontAwesomeIcons.plus, title: 'Adcionar Contatos'),
           ],
-          onTap: (_) {
-            Navigator.push(
+          onTap: (_) async {
+            await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (contex) => const CadastroContatosPage(),

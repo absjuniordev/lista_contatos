@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/page/home_page.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -31,6 +32,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
 
   // ignore: prefer_final_fields
   var _repository = SQLITERepository();
+  var _contatos = const <ContatosModel>[];
 
   late TabController tabController;
 
@@ -40,13 +42,15 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
   @override
   void initState() {
     super.initState();
-    obterLista();
+
     tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+    obterLista();
   }
 
   obterLista() async {
-    await _repository.obterListaConattos();
+    // print(_contatos);
 
+    _contatos = await _repository.obterListaConattos();
     setState(() {});
   }
 
@@ -73,7 +77,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
             if (i == 0) {
               Navigator.pop(context);
             } else if (controllerNome.text.isEmpty ||
-                controllerNome.text.length <= 3) {
+                controllerNome.text.length < 3) {
               mostrarInfo(
                 0,
                 context: context,
@@ -103,9 +107,8 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                   photo == null ? "" : photo!.path,
                 ),
               );
-
+              Navigator.popAndPushNamed(context, '/');
               setState(() {});
-              Navigator.pop(context);
             }
           },
         ),
@@ -192,18 +195,21 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                           children: [
                             TextFormField(
                               controller: controllerNome,
-                              decoration:
-                                  const InputDecoration(label: Text("Nome")),
+                              decoration: const InputDecoration(
+                                label: Text("Nome"),
+                              ),
                             ),
                             TextFormField(
                               controller: controllerSobreNome,
                               decoration: const InputDecoration(
-                                  label: Text("Sobrenome")),
+                                label: Text("Sobrenome"),
+                              ),
                             ),
                             TextFormField(
                               controller: controllerApelido,
-                              decoration:
-                                  const InputDecoration(label: Text("Apelido")),
+                              decoration: const InputDecoration(
+                                label: Text("Apelido"),
+                              ),
                             ),
                           ],
                         ),
@@ -277,7 +283,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                     ),
                     const SizedBox(height: 20),
                     Container(
-                      height: 115,
+                      height: 120,
                       decoration: const BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: Colors.white,
@@ -287,7 +293,8 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                              maxLines: 3,
+                              maxLength: 60,
+                              maxLines: 2,
                               controller: controllerInformacoes,
                               decoration: const InputDecoration(
                                 label: Text("Informações Adcionais"),
