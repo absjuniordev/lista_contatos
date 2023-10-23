@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/shared/constants/color_defualt.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
 import 'package:lista_contatos/util/selecionar_imagem.dart';
 import 'package:path/path.dart';
@@ -59,7 +60,7 @@ class _EditarContatosPageState extends State<EditarContatosPage>
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: ConvexAppBar.badge(
-          backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+          backgroundColor: CustomColor().getPrimeiroContainer(),
           color: Colors.white,
           const {},
           items: const [
@@ -85,7 +86,8 @@ class _EditarContatosPageState extends State<EditarContatosPage>
                 title: "Erro",
                 confirmacao: false,
               );
-            } else if (controllerTelefone.text.isEmpty) {
+            } else if (controllerTelefone.text.isEmpty ||
+                controllerTelefone.text.length < 11) {
               mostrarInfo(
                 0,
                 context: context,

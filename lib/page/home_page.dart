@@ -3,6 +3,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lista_contatos/page/cadastro_contatos_page.dart';
 import 'package:lista_contatos/page/lista_contatos_page.dart';
+import 'package:lista_contatos/shared/constants/color_defualt.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         bottomNavigationBar: ConvexAppBar.badge(
           const {},
-          backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+          backgroundColor: CustomColor().getPrimeiroContainer(),
           items: const [
             TabItem(icon: FontAwesomeIcons.plus, title: 'Adcionar Contatos'),
           ],

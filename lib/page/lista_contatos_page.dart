@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
 import 'package:lista_contatos/page/detalhes_contato_page.dart';
 import 'package:lista_contatos/repository/sqlite_repository.dart';
+import 'package:lista_contatos/shared/constants/color_defualt.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
 
 class ListaContatosPages extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+        backgroundColor: CustomColor().getPrimeiroContainer(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -100,10 +101,11 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                                     _contatos.length > 1
                                         ? "${_contatos.length} contatos"
                                         : "${_contatos.length} contato",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 34, 78, 134),
+                                      color:
+                                          CustomColor().getPrimeiroContainer(),
                                     ),
                                   ),
                                 ],

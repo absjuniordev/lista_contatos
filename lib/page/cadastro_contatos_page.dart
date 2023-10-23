@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
+import 'package:lista_contatos/shared/constants/color_defualt.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -49,7 +50,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: ConvexAppBar.badge(
-          backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+          backgroundColor: CustomColor().getPrimeiroContainer(),
           color: Colors.white,
           const {},
           items: const [
@@ -75,7 +76,8 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                 title: "Erro",
                 confirmacao: false,
               );
-            } else if (controllerTelefone.text.isEmpty) {
+            } else if (controllerTelefone.text.isEmpty ||
+                controllerTelefone.text.length < 11) {
               mostrarInfo(
                 0,
                 context: context,
@@ -181,7 +183,9 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                     ),
                     Container(
                       decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle, color: Colors.white),
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -211,7 +215,9 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                     const SizedBox(height: 20),
                     Container(
                       decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle, color: Colors.white),
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -234,7 +240,9 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                     const SizedBox(height: 20),
                     Container(
                       decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle, color: Colors.white),
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -253,7 +261,9 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                     const SizedBox(height: 20),
                     Container(
                       decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle, color: Colors.white),
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
