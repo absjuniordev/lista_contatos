@@ -49,6 +49,29 @@ class SQLITERepository {
     );
   }
 
+  Future<void> editarListaContatos(ContatosModel contatosModel) async {
+    var db = await SQLTEDatabase().obterDB();
+
+    await db.transaction(
+      (txn) async {
+        await txn.rawUpdate(
+          'UPDATE contatos SET name = ?, sobreName = ?, apelido = ?, telefone = ?, email = ?, dataNascimento = ?, informacoes = ?, imageUrl = ? WHERE id = ?',
+          [
+            contatosModel.nome,
+            contatosModel.sobreName,
+            contatosModel.apelido,
+            contatosModel.telefone,
+            contatosModel.email,
+            contatosModel.dataNascimento,
+            contatosModel.informacoes,
+            contatosModel.imageUrl,
+            contatosModel.id
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> apagarContato(int id) async {
     var db = await SQLTEDatabase().obterDB();
 

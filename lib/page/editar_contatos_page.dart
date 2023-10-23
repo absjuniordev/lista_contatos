@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -8,26 +7,28 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
+import 'package:lista_contatos/util/selecionar_imagem.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:lista_contatos/repository/sqlite_repository.dart';
 
-class CadastroContatosPage extends StatefulWidget {
-  const CadastroContatosPage({super.key});
+class EditarContatosPage extends StatefulWidget {
+  final ContatosModel item;
+  const EditarContatosPage({super.key, required this.item});
 
   @override
-  State<CadastroContatosPage> createState() => _CadastroContatosPageState();
+  State<EditarContatosPage> createState() => _EditarContatosPageState();
 }
 
-class _CadastroContatosPageState extends State<CadastroContatosPage>
+class _EditarContatosPageState extends State<EditarContatosPage>
     with TickerProviderStateMixin {
-  var controllerNome = TextEditingController(text: "");
-  var controllerSobreNome = TextEditingController(text: "");
-  var controllerApelido = TextEditingController(text: "");
-  var controllerTelefone = TextEditingController(text: "");
-  var controllerEmail = TextEditingController(text: "");
-  var controllerDataNascimento = TextEditingController(text: "");
-  var controllerInformacoes = TextEditingController(text: "");
+  late TextEditingController controllerNome;
+  late TextEditingController controllerSobreNome;
+  late TextEditingController controllerApelido;
+  late TextEditingController controllerTelefone;
+  late TextEditingController controllerEmail;
+  late TextEditingController controllerDataNascimento;
+  late TextEditingController controllerInformacoes;
 
   // ignore: prefer_final_fields
   var _repository = SQLITERepository();
@@ -40,6 +41,15 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
   @override
   void initState() {
     super.initState();
+    controllerNome = TextEditingController(text: widget.item.nome);
+    controllerSobreNome = TextEditingController(text: widget.item.sobreName);
+    controllerApelido = TextEditingController(text: widget.item.apelido);
+    controllerTelefone = TextEditingController(text: widget.item.telefone);
+    controllerEmail = TextEditingController(text: widget.item.email);
+    controllerDataNascimento =
+        TextEditingController(text: widget.item.dataNascimento);
+    controllerInformacoes =
+        TextEditingController(text: widget.item.informacoes);
 
     tabController = TabController(initialIndex: 0, length: 2, vsync: this);
   }
@@ -84,9 +94,9 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                 confirmacao: false,
               );
             } else {
-              _repository.salvarListaContatos(
+              _repository.editarListaContatos(
                 ContatosModel(
-                  0,
+                  widget.item.id,
                   controllerNome.text,
                   controllerSobreNome.text,
                   controllerApelido.text,
@@ -94,7 +104,7 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                   controllerEmail.text,
                   controllerDataNascimento.text,
                   controllerInformacoes.text,
-                  photo == null ? "" : photo!.path,
+                  photo == null ? widget.item.imageUrl : photo!.path,
                 ),
               );
 
@@ -154,27 +164,11 @@ class _CadastroContatosPageState extends State<CadastroContatosPage>
                         setState(() {});
                       },
                       child: Container(
-                        height: 150,
-                        padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey,
-                        ),
-                        child: photo == null
-                            ? Image.asset(
-                                "assets/images/user.png",
-                                scale: 5,
-                              )
-                            : ClipOval(
-                                child: Image.file(
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                  File(photo!.path),
-                                  scale: 6,
-                                ),
-                              ),
-                      ),
+                          height: 150,
+                          padding: const EdgeInsets.all(2),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                          child: buildImageWidget(photo, widget.item)),
                     ),
                     const SizedBox(
                       height: 25,

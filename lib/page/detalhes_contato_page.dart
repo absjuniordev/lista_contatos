@@ -3,36 +3,63 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lista_contatos/page/editar_contatos_page.dart';
+import 'package:lista_contatos/shared/constants/color_defualt.dart';
 
-class ContatoDetalhesPage extends StatefulWidget {
+class DetalhesContatoPage extends StatefulWidget {
   final ContatosModel item;
-  const ContatoDetalhesPage({super.key, required this.item});
+  const DetalhesContatoPage({super.key, required this.item});
 
   @override
-  State<ContatoDetalhesPage> createState() => _ContatoDetalhesPageState();
+  State<DetalhesContatoPage> createState() => _DetalhesContatoPageState();
 }
 
-class _ContatoDetalhesPageState extends State<ContatoDetalhesPage> {
+class _DetalhesContatoPageState extends State<DetalhesContatoPage>
+    with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      initialIndex: 0,
+      length: 2,
+      vsync: this,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: ConvexAppBar.badge(
           const {},
-          backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+          backgroundColor: CustomColor().getPrimeiroContainer(),
           items: const [
-            // TabItem(icon: FontAwesomeIcons.edit, title: 'Voltar'),
             TabItem(icon: FontAwesomeIcons.arrowLeft, title: 'Voltar'),
+            TabItem(icon: FontAwesomeIcons.userPen, title: 'Editar'),
           ],
-          onTap: (_) async {
-            Navigator.pop(context);
+          controller: tabController,
+          onTap: (i) async {
+            if (i == 0) {
+              Navigator.pop(context);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (builder) => EditarContatosPage(
+                    item: widget.item,
+                  ),
+                ),
+              );
+            }
           },
         ),
-        backgroundColor: const Color.fromARGB(255, 34, 78, 134),
+        backgroundColor: CustomColor().getPrimeiroContainer(),
         body: Column(
           children: [
             const SizedBox(
-              height: 40,
+              height: 36,
             ),
             widget.item.imageUrl != ""
                 ? ClipOval(
@@ -46,8 +73,8 @@ class _ContatoDetalhesPageState extends State<ContatoDetalhesPage> {
                       ),
                     ),
                   )
-                : Image.network(
-                    "https://www.imagensempng.com.br/wp-content/uploads/2021/08/02-52.png",
+                : Image.asset(
+                    "assets/images/user.png",
                     scale: 5,
                   ),
             const SizedBox(height: 20),
@@ -161,7 +188,8 @@ class _ContatoDetalhesPageState extends State<ContatoDetalhesPage> {
                             const Text(
                               "Informações",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 19, 4, 228)),
+                                color: Color.fromARGB(255, 19, 4, 228),
+                              ),
                             ),
                             Text(
                               widget.item.informacoes,

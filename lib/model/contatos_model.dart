@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ContatosModel {
   int _id = 0;
@@ -10,7 +8,7 @@ class ContatosModel {
   String _email = "";
   String _dataNascimento = "";
   String _informacoes = "";
-  String? _imageUrl;
+  String _imageUrl = "";
   ContatosModel(
     this._id,
     this._name,
@@ -30,7 +28,7 @@ class ContatosModel {
   String get email => _email;
   String get dataNascimento => _dataNascimento;
   String get informacoes => _informacoes;
-  String get imageUrl => _imageUrl!;
+  String get imageUrl => _imageUrl;
 
   set id(int id) => _id = id;
   set nome(String nome) => _name = nome;
@@ -60,23 +58,4 @@ class ContatosModel {
       '_imageUrl': _imageUrl,
     };
   }
-
-  factory ContatosModel.fromMap(Map<String, dynamic> map) {
-    return ContatosModel(
-      map['_id'] as int,
-      map['_name'] as String,
-      map['_sobreName'] as String,
-      map['_apelido'] as String,
-      map['_telefone'] as String,
-      map['_email'] as String,
-      map['_dataNascimento'] as String,
-      map['_informacoes'] as String,
-      map['_imageUrl'] != null ? map['_imageUrl'] as String : null,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ContatosModel.fromJson(String source) =>
-      ContatosModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

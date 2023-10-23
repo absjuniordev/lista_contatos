@@ -1,9 +1,7 @@
 import 'dart:io';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lista_contatos/model/contatos_model.dart';
-import 'package:lista_contatos/page/contato_detalhes_page.dart';
+import 'package:lista_contatos/page/detalhes_contato_page.dart';
 import 'package:lista_contatos/repository/sqlite_repository.dart';
 import 'package:lista_contatos/util/mostrar_info.dart';
 
@@ -163,7 +161,7 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ContatoDetalhesPage(
+                                                DetalhesContatoPage(
                                               item: _contatos[index],
                                             ),
                                           ),
@@ -192,7 +190,7 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                                           height: 50,
                                           child: Row(
                                             children: [
-                                              contatos.imageUrl != ""
+                                              contatos.imageUrl.isNotEmpty
                                                   ? ClipOval(
                                                       child: Image(
                                                         width: 45,
@@ -200,13 +198,14 @@ class _ListaContatosPagesState extends State<ListaContatosPages> {
                                                         fit: BoxFit.cover,
                                                         image: FileImage(
                                                           scale: 22,
-                                                          File(contatos
-                                                              .imageUrl),
+                                                          File(
+                                                            contatos.imageUrl,
+                                                          ),
                                                         ),
                                                       ),
                                                     )
-                                                  : Image.network(
-                                                      "https://www.imagensempng.com.br/wp-content/uploads/2021/08/02-52.png",
+                                                  : Image.asset(
+                                                      "assets/images/user.png",
                                                       scale: 5,
                                                     ),
                                               Container(
